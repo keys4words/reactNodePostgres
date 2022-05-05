@@ -18,7 +18,7 @@ const startServer = ()=>{
         const postOne = new Post({name:"Discovery"});
         postOne.save(function(err, savedPostOne){
             if (err) return console.error(err);
-            console.log("savedPostOne", savedPostOne);
+            console.log("savedPostOne with volumes", savedPostOne);
         });
         // Post.find(function(err, posts){
         //     if (err) return console.error(err);

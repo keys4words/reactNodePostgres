@@ -16,3 +16,8 @@ services:
 
   db:
     image: mongo
+    volumes:
+      - ${PWD}/mongodb_api:/data/db
+
+volumes:
+  mongodb_api:
