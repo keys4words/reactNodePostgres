@@ -3,6 +3,7 @@ version: '3'
 services:
   api:
     build: ./api
+    container_name: rnp-api
     command: npm run start
     restart: unless-stopped
     ports:
@@ -16,8 +17,30 @@ services:
 
   db:
     image: mongo
+    container_name: rnp-mongo
     volumes:
       - ${PWD}/mongodb_api:/data/db
 
+  auth:
+    build: ./auth
+    container_name: rnp-auth
+    command: npm run start
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - HOST=http://example.com
+      - MONGO_URL=mongodb://auth_db:27017/auth
+    depends_on:
+      - auth_db
+
+  auth_db:
+    image: mongo
+    container_name: rnp-mongo-auth
+    volumes:
+      - ${PWD}/mongodb_auth:/data/db
+
 volumes:
   mongodb_api:
+  mongodb_auth:
